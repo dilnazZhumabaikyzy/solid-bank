@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="AccountBasicCli" class="com.example.solidbank.model.AccountBasicCli">
+        <constructor-arg index="0" ref="MyCLI"/>
+        <constructor-arg index="1" ref="BankCore"/>
+        <constructor-arg index="2" ref="AccountListingServiceImpl"/>
+    </bean>
+    <bean id="BankCore" class="com.example.solidbank.service.BankCore">
+        <constructor-arg ref="AccountCreationServiceImpl"/>
+    </bean>
+    <bean id="AccountCreationService" class="com.example.solidbank.service.AccountCreationService" abstract="true"></bean>
+    <bean id="AccountCreationServiceImpl" class="com.example.solidbank.service.impl.AccountCreationServiceImpl">
+        <constructor-arg ref="MemoryAccountDao"/>
+    </bean>
+    <bean id="AccountDao" class="com.example.solidbank.DAO.AccountDao" abstract="true"></bean>
+    <bean id="MemoryAccountDao" class="com.example.solidbank.DAO.MemoryAccountDao"></bean>
+    <bean id="AccountListingService" class="com.example.solidbank.service.AccountListingService" abstract="true"/>
+    <bean id="AccountListingServiceImpl" class="com.example.solidbank.service.impl.AccountListingServiceImpl">
+        <constructor-arg ref="MemoryAccountDao"/>
+    </bean>
+    <bean id="CreateAccountOperationUI" class="com.example.solidbank.model.CreateAccountOperationUI" abstract="true"></bean>
+    <bean id="CLIUI" class="com.example.solidbank.model.CLIUI" abstract="true"/>
+    <bean id="MyCLI" class="com.example.solidbank.service.MyCLI"></bean>
+    <context:component-scan base-package="com.example.solidbank"/>
+</beans>
